@@ -1,0 +1,88 @@
+<a href:"https://www.playok.com/en/reversi/"></a>
+pro's:
+simplistic but clear splashscreen
+guest log in is easily found
+point count
+elo
+possible to change game settings
+history
+dark theme
+
+
+con's:
+rules not easily defined on the splashscreen
+looks kind of cheap
+some useless buttons/no button description
+NO ANIMATIONS
+no fullscreen
+no AI
+
+
+<a href:"https://othello-reversi.com/play/index.html"></a>
+pro's:
+fullscreen mode
+splash screen super simple
+AI, difficulty levels
+couch multiplayer
+see al possible moves
+clear explanation
+can see score
+graphics
+able to see gametime
+
+con's:
+useless button on splashscreen
+can't switch theme
+no online
+refers to own site after EACH game
+
+
+<a href:"http://www.webgamesonline.com/reversi/"></a>
+
+pro's:
+can see score
+instructions
+clear what consequences your move has (with animations)
+undo button
+animation for AI move
+can start second
+
+
+con's:
+input field that is used for output
+only against AI
+AI always the same difficult
+looks kinda bad
+
+
+
+
+<a href:"http://www.flyordie.com/games/online/games.html?lang=en&game=Reversi&rs=1"></a>
+
+pro's:
+can sign in with google account
+friendlist
+good explanation
+chat
+mute
+ratings
+move export
+tournaments
+share option
+description on hover
+FANCY graphics
+
+
+
+cons:
+FUCKING ADS
+share option
+no fullscreen
+no theme switching
+
+https://wireframe.cc/2c3pp4
+
+https://wireframe.cc/hC2na2
+
+https://github.com/4680324/WebAndDatabase
+
