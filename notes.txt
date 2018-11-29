@@ -80,8 +80,10 @@ share option
 no fullscreen
 no theme switching
 
+This is the game interface
 https://wireframe.cc/2c3pp4
 
+This is the find splashscreen
 https://wireframe.cc/hC2na2
 
 https://github.com/4680324/WebAndDatabase
