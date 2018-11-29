@@ -8,6 +8,8 @@ var main = function(){   //this is the main
     $(".Friend button").on("click", function(event) {
         console.log("Dit werkt niet lol");
     });
+
+    
 };
 
 $(document).ready(main);
