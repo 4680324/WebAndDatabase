@@ -1,0 +1,21 @@
+div.row>div{
+  width: 30px;
+  height: 30px;
+  display: table-cell;
+}
+div.row:nth-child(2n)>div:nth-child(2n){
+  background: blue;
+}
+div.row:nth-child(2n+1)>div:nth-child(2n){
+  background: yellow;
+}
+div.row:nth-child(2n)>div:nth-child(2n+1){
+  background: yellow;
+}
+div.row:nth-child(2n+1)>div:nth-child(2n+1){
+  background: blue;
+}
+
+div.row{
+  	display: table-row;
+}
