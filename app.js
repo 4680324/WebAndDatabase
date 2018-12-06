@@ -46,6 +46,7 @@ function addPlayer(ws) {
 
 wss.on("connection", function(ws) {
     console.log("[LOG] someone connected");
+    ws.game = null
     
     ws.onmessage = function(message) {
         console.log("[LOG] " + message);
