@@ -10,12 +10,12 @@
     };
 
     /*
-     * Server to client: game has started
+     * Any to any: game has started
      */
     exports.T_GAME_START = "GAME-START";
     exports.O_GAME_START = {
         type: exports.T_GAME_START,
-        opponent: null
+        name: null
     };
 
     /*
@@ -35,6 +35,6 @@
         type: exports.T_MOVE,
         move: null
     };
-    exports.S_PLAYER_B = JSON.stringify(exports.O_MOVE);
+    exports.S_MOVE = JSON.stringify(exports.O_MOVE);
   
 }(typeof exports === 'undefined' ? this.utilities = {} : exports));
