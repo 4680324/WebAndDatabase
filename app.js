@@ -17,46 +17,66 @@ const wss = new websocket.Server({ server });
 var waitingPlayer = null
 var currentGames = []
 
-function handleGameMessage(thisPlayer, otherPlayer, game, message) {
+function handleGameMessage(thisPlayer, otherPlayer, message) {
     message = JSON.parse(message);
 
     if (message.type === messages.T_OFFER_DRAW) {
         otherPlayer.send(messages.S_OFFER_DRAW);
     }
+
+    if (message.type === messages.T_MOVE && thisPlayer.current) {
+        thisPlayer.game.move()
+    }
 }
 
-function Game(player1, player2) {
-    this.player1 = player1;
-    this.player2 = player2;
-    player1.game = this;
-    player2.game = this;
+function Game(black, white) {
+    this.black = black;
+    this.white = white;
+    this.black.game = this;
+    this.white.game = this;
 
-    this.end = function(){}
+    this.end = function(winner){}
 
-    player1.onmessage = function(message) {
-        handleGameMessage(player1, player2, this, message);
+    this.black.onmessage = function(message) {
+        handleGameMessage(this.black, this.white, message);
     };
-    player2.onmessage = function(message) {
-        handleGameMessage(player2, player1, this, message);
+    this.white.onmessage = function(message) {
+        handleGameMessage(this.white, this.black, message);
     };
-    player1.send(JSON.stringify(messages.O_GAME_START(player2.name)));
-    player2.send(JSON.stringify(messages.O_GAME_START(player1.name)));
-    player2.send(JSON.stringify(messages.O_MOVE(null)));
+    this.black.onclose = function() {
+        this.end(this.white);
+    };
+    this.white.onclose = function() {
+        this.end(this.black);
+    }
+
+    this.black.send(JSON.stringify(messages.O_GAME_START(this.white.name)));
+    this.white.send(JSON.stringify(messages.O_GAME_START(this.black.name)));
+
+    this.black.send(JSON.stringify(messages.O_MOVE(null)));
+
     currentGames.push(this);
 }
 
 function addPlayer(ws) {
     if (waitingPlayer === null) {
         waitingPlayer = ws;
+        
+        ws.onclose = function() {
+            if (waitingPlayer === ws) {
+                waitingPlayer = null
+            }
+        }
     } else {
-        new Game(ws, waitingPlayer);
+        new Game(waitingPlayer, ws);
         waitingPlayer = null;
     }
 }
 
 wss.on("connection", function(ws) {
     console.log("[LOG] someone connected");
-    ws.game = null
+    ws.game = null;
+    ws.current = false;
     
     ws.onmessage = function(message) {
         console.log("[LOG] " + message);
@@ -68,15 +88,6 @@ wss.on("connection", function(ws) {
             addPlayer(ws);
         }
     };
-
-    ws.onclose = function() {
-        if (waitingPlayer === ws) {
-            waitingPlayer = null
-        }
-        if (ws.game !== null) {
-            ws.game.end();
-        }
-    }
 });
 
 server.listen(port);
