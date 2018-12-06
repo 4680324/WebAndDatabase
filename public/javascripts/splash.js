@@ -1,12 +1,12 @@
-var main = function(){   //this is the main
+var main = function(){
 "use strict";
 
     $("#Stranger button").on("click", function (event) {
-        console.log("dit werkt 1");
+        console.log("connecting to stranger!");
     });
 
     $("#Friend button").on("click", function(event) {
-        console.log("Dit werkt niet lol");
+        console.log("generating custom url");
     });
 
     
