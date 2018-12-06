@@ -4,18 +4,18 @@
      * Server to client: game is complete, the winner is ... 
      */       
     exports.T_GAME_END = "GAME-END"
-    exports.O_GAME_END = {
-        type: exports.T_GAME_END,
-        winner: null
+    exports.O_GAME_END = function(winner) {
+        this.type = exports.T_GAME_END;
+        this.winner = null;
     };
 
     /*
      * Any to any: game has started
      */
     exports.T_GAME_START = "GAME-START";
-    exports.O_GAME_START = {
-        type: exports.T_GAME_START,
-        name: null
+    exports.O_GAME_START = function(name) {
+        this.type = exports.T_GAME_START;
+        this.name = name;
     };
 
     /*
@@ -31,10 +31,9 @@
      * Any to any: make move
      */
     exports.T_MOVE = "MOVE";
-    exports.O_MOVE = {
-        type: exports.T_MOVE,
-        move: null
+    exports.O_MOVE = function(move) {
+        this.type = exports.T_MOVE;
+        this.move = move;
     };
-    exports.S_MOVE = JSON.stringify(exports.O_MOVE);
   
 }(typeof exports === 'undefined' ? this.utilities = {} : exports));
