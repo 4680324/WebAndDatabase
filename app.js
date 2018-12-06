@@ -17,7 +17,13 @@ const wss = new websocket.Server({ server });
 var waitingPlayer = null
 var currentGames = []
 
-function handleGameMessage(message) {}
+function handleGameMessage(thisPlayer, otherPlayer, game, message) {
+    message = JSON.parse(message);
+
+    if (message.type === messages.T_OFFER_DRAW) {
+        otherPlayer.send(messages.S_OFFER_DRAW);
+    }
+}
 
 function Game(player1, player2) {
     this.player1 = player1;
@@ -27,8 +33,12 @@ function Game(player1, player2) {
 
     this.end = function(){}
 
-    player1.onmessage = handleGameMessage;
-    player2.onmessage = handleGameMessage;
+    player1.onmessage = function(message) {
+        handleGameMessage(player1, player2, this, message);
+    };
+    player2.onmessage = function(message) {
+        handleGameMessage(player2, player1, this, message);
+    };
     player1.send(JSON.stringify(messages.O_GAME_START(player2.name)));
     player2.send(JSON.stringify(messages.O_GAME_START(player1.name)));
     player2.send(JSON.stringify(messages.O_MOVE(null)));
