@@ -35,19 +35,26 @@ function Game(black, white) {
     this.black.game = this;
     this.white.game = this;
 
-    this.end = function(winner){}
+    this.end = function(winner, loser){
+        if (winner.readyState === 1) {
+            winner.send(JSON.stringify(messages.O_GAME_END(true)));
+        }
+        if (loser.readyState === 1) {
+            loser.send(JSON.stringify(messages.O_GAME_END(false)));
+        }
+    }
 
     this.black.onmessage = function(message) {
         handleGameMessage(this.black, this.white, message);
-    };
+    }
     this.white.onmessage = function(message) {
         handleGameMessage(this.white, this.black, message);
-    };
+    }
     this.black.onclose = function() {
-        this.end(this.white);
-    };
+        this.end(this.white, this.black);
+    }
     this.white.onclose = function() {
-        this.end(this.black);
+        this.end(this.black, this.white);
     }
 
     this.black.send(JSON.stringify(messages.O_GAME_START(this.white.name)));
@@ -61,7 +68,7 @@ function Game(black, white) {
 function addPlayer(ws) {
     if (waitingPlayer === null) {
         waitingPlayer = ws;
-        
+
         ws.onclose = function() {
             if (waitingPlayer === ws) {
                 waitingPlayer = null
@@ -87,7 +94,7 @@ wss.on("connection", function(ws) {
             ws.name = message.name;
             addPlayer(ws);
         }
-    };
+    }
 });
 
 server.listen(port);
