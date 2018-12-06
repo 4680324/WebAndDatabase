@@ -6,7 +6,7 @@
     exports.T_GAME_END = "GAME-END"
     exports.O_GAME_END = function(winner) {
         this.type = exports.T_GAME_END;
-        this.winner = null;
+        this.winner = null;  // this is true if the player is the winner, false otherwise
     };
 
     /*
@@ -15,7 +15,7 @@
     exports.T_GAME_START = "GAME-START";
     exports.O_GAME_START = function(name) {
         this.type = exports.T_GAME_START;
-        this.name = name;
+        this.name = name;  // this is the string name, of course not sanitized or verified :P
     };
 
     /*
@@ -31,9 +31,10 @@
      * Any to any: make move
      */
     exports.T_MOVE = "MOVE";
-    exports.O_MOVE = function(move) {
+    exports.O_MOVE = function(move, updates) {
         this.type = exports.T_MOVE;
-        this.move = move;
+        this.move = move;  // this is an object with (x, y) of the moves location
+        this.updates = updates;  // this is a list of location-value objects
     };
   
 }(typeof exports === 'undefined' ? this.messages = {} : exports));
