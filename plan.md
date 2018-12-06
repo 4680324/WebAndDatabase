@@ -33,3 +33,18 @@
 
 * constructor pattern
 * module pattern
+
+## message types
+
+### server to player
+
+* move made by other player/ new board state
+* end of game/ details
+* other player connected/ player details
+* offer draw from other player
+
+### player to server
+
+* move made by player
+* offer draw
+* end of game/ details
