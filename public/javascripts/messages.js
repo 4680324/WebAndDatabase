@@ -36,4 +36,4 @@
         this.move = move;
     };
   
-}(typeof exports === 'undefined' ? this.utilities = {} : exports));
+}(typeof exports === 'undefined' ? this.messages = {} : exports));
