@@ -2,23 +2,40 @@
 ## ui elements
 
 * resign button:
-  this will send a request to thes server to stop the game
+  stop the connection to the server, show a resign(you lost) box to the resigning player.
+  when connection stops, server knows he done.
+  return to splashscreen after x seconds
+
 * quit from the website:
-  this has the same effect as the resign button
+  >resign
+
 * offer draw button:
   send a draw request to the server
+        when server recieves draw request:
+            send message to other player with (y,n)
+            if other players says y, show draw message, return to splash after x seconds
+            if other player says n, continue game.
+
 * game field divs:
-  when the field is available and allowed and the player is the one to move, send a request to the server
+  send a request to the server iff
+    -  requested place is valid
+    -  it's the players turn
+
 * press chat send button:
   send message to server
+    
+
 * receive message from server:
   add message to chat field
+
 * receive move from server:
   display in a div
+
 * receive draw from server:
   offer draw to player and send response to server
+
 * reveive resign from server:
-  show reseign to player
+  show resign to player
   return to the splash screen
 
 ## objects

@@ -5,20 +5,38 @@ var socket = new WebSocket("ws://localhost");
 var main = function(){ 
     "use strict";
 
-    /*
-    * when a new pages opens on the socket do something on opening the page (1) and on recieving a message (2)
-    */
-    socket.onopen = function(){
+    socket.onopen = function(){ //when opening a connection, send a message with the name of the connecting party to the server.
         socket.send("Hello from the client!");
-        var startGame = messages.O_GAME_START("bob");
 
-        socket.send(JSON.stringify(startGame));
+        var user = prompt("Please enter your name");
+
+        if(user !== ""){
+            var startGame = messages.O_GAME_START(user);
+            socket.send(JSON.stringify(startGame));
+            //show own name in the name tag in html
+        
+            $("aside #player1Name").append(user);
+
+        }else{
+            console.log("disconnect!");
+         //   returntosplash();
+        }
     };
+
     socket.onmessage = function(event){
+        var mess = JSON.parse(event);
+        if(mess.type === messages.T_GAME_START){
+            //show name to the opponents tag in html
+
+            var $opponentName;
+
+        }
         socket.send();
     };
 
+    var returnToSplash = function(){
 
+    };
 
 
     $("div.row>div").on("click", function (event) {

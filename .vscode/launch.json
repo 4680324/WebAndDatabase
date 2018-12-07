@@ -10,7 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/app.js",
             "args": [
-                "80"
+                "80"    //basically just sets the port to 80
             ]
         }
     ]

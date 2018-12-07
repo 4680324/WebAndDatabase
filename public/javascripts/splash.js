@@ -3,6 +3,8 @@ var main = function(){
 
     $("#Stranger button").on("click", function (event) {
         console.log("connecting to stranger!");
+        
+
     });
 
     $("#Friend button").on("click", function(event) {
