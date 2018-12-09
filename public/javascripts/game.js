@@ -16,7 +16,7 @@ var main = function(){
             socket.send(JSON.stringify(startGame));
             //show own name in the name tag in html
         
-            $("aside #player1Name").append(user);
+            $("#Name1").text(user);
 
         }else{
             console.log("disconnect!");
@@ -29,7 +29,7 @@ var main = function(){
         if(mess.type === messages.T_GAME_START){
             color = mess.color;
             //show name to the opponents tag in html
-            $("aside #player2Name").append(mess.name);
+            $("#Name2").text(mess.name);
         }
 
         if(mess.type === messages.T_MOVE){
@@ -45,13 +45,18 @@ var main = function(){
     };
 
 
+<<<<<<< HEAD
 
     $("div.row>div").on("click", function (event) {
+=======
+    $("td").on("click", function (event) {
+>>>>>>> a7e47be4d1baaba92a64f1c263221e38d33c37b7
         var node = event.target;
         for (var column=0; (node=node.previousSibling); column++);
+        column = (column + 1) / 2;
         var parent = event.target.parentNode;
         for (var row=0; (parent=parent.previousSibling); row++);
-        row = (row + 1) / 2;
+        row = row / 2 + 1;
         console.log("column %s, row %s", column, row);
     });
 

@@ -29,14 +29,15 @@ function Game(black, white) {
     this.black.color = 'black';
     this.white.color = 'white';
     this.board = new logic.BoardState();
+    let game = this;
 
     //determines who won the game and sends the appropriate message to the players
     this.end = function(winner, loser){
         if (winner.readyState === 1) {
-            winner.send(new JSON.stringify(messages.O_GAME_END(true)));
+            winner.send(JSON.stringify(new messages.O_GAME_END(true)));
         }
         if (loser.readyState === 1) {
-            loser.send(new JSON.stringify(messages.O_GAME_END(false)));
+            loser.send(JSON.stringify(new messages.O_GAME_END(false)));
         }
         currentGames.splice(currentGames.indexOf(this));
     }
@@ -50,8 +51,8 @@ function Game(black, white) {
     
         if (message.type === messages.T_MOVE && thisPlayer.current) {   //if a move is recieved and its that players turn
             move = message.move;
-            if (this.board.checkMove(move.x, move.y, thisPlayer.color)) {
-                this.board.move(move.x, move.y, thisPlayer.color);
+            if (game.board.checkMove(move.x, move.y, thisPlayer.color)) {
+                game.board.move(move.x, move.y, thisPlayer.color);
                 otherPlayer.send(new messages.O_MOVE(move, null));
                 //gives the move to the other player
                 thisPlayer.current = false;
@@ -62,16 +63,16 @@ function Game(black, white) {
     }
 
     this.black.onmessage = function(event) {
-        handleGameMessage(this.black, this.white, event.data);
+        game.handleGameMessage(game.black, game.white, event.data);
     }
     this.white.onmessage = function(event) {
-        handleGameMessage(this.white, this.black, event.data);
+        game.handleGameMessage(game.white, game.black, event.data);
     }
     this.black.onclose = function() {
-        this.end(this.white, this.black);
+        game.end(game.white, game.black);
     }
     this.white.onclose = function() {
-        this.end(this.black, this.white);
+        game.end(game.black, game.white);
     }
 
     this.black.send(JSON.stringify(new messages.O_GAME_START(this.white.name, 'black')));
