@@ -11,11 +11,14 @@ var main = function(){
         var user = prompt("Please enter your name");
 
         if(user !== ""){
-            var startGame = messages.O_GAME_START(user);
-            socket.send(JSON.stringify(startGame));
-            //show own name in the name tag in html
-        
-            $("aside #player1Name").append(user);
+            socket.send(JSON.stringify(messages.O_GAME_START(user)));   //send a msg to the server with the name of the player
+            $("aside #Name1").append(user);            //show own name in the name tag in html
+
+            socket.on('other player name', function(msg){   //show opponent name in name tag
+                $('aside #Name2').append(msg);
+            });
+
+            
 
         }else{
             console.log("disconnect!");

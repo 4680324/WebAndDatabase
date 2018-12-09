@@ -1,58 +1,162 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>The Reversi game!</title>
+    <title>Reversi</title>
     <link rel="stylesheet" href="stylesheets/game.css">
 </head>
 <body>
     <aside id="player1Info">
-        <h2>Name:</h2>
-        <p><span id="player1Name"></span></p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Reversi_XXt45.svg" alt="reversi piece">
-        <h3>Score:</h3>
-        <span id="player1Score"></span>
-        <h3>Time left:</h3>
-        <span id="player1Time"></span>
-        <h3>Elo:</h3>
-        <span id="player1Elo"></span>
+		<div class="name-1">
+			<h4>Name:</h4>
+			<h2><p><span id="Name1"></span></p></h2>
+		</div>
+		
+        <div class="column-colour">
+            <h3 id='my_colour'></h3> <!--I will draw the colour of the player in here using Jquery later-->
+        </div>
+       
+		<div class="score-1">
+			<h3>Score:</h3>
+			<span id="Score1"></span>
+		</div>
+	   
+		<div class="Time 1">
+			<h3>Time left:</h3>
+			<span id="Time1"></span>
+        </div>
+		
+		<div class="elo1">
+			<h3>Elo:</h3>
+			<span id="Elo1"></span>
+		</div>
     </aside>
+
     <aside id="player2Info">
-        <h2>Name:</h2>
-        <p><span id="player2Name"></span></p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Reversi_XXt45.svg" alt="reversi piece">
-        <h3>Score:</h3>
-        <span id="player1Score"></span>
-        <h3>Time left:</h3>
-        <span id="player1Time"></span>
-        <h3>Elo:</h3>
-        <span id="player1Elo"></span>
+		<div class="name-2">
+			<h4>Name:</h4>
+			<h2><p><span id="Name2"></span></p></h2>
+		</div>
+		
+        <div class="column-colour">
+            <h3 id='my_colour'></h3> <!--I will draw the colour of the player in here using Jquery later-->
+        </div>
+       
+		<div class="score-2">
+			<h3>Score:</h3>
+			<span id="Score2"></span>
+		</div>
+	   
+		<div class="Time 2">
+			<h3>Time left:</h3>
+			<span id="Time2"></span>
+        </div>
+		
+		<div class="elo2">
+			<h3>Elo:</h3>
+			<span id="Elo2"></span>
+		</div>
     </aside>
-    <section id="gameBoard">
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+
+
+            <div class="row">
+                <div class="col">
+                    <table id="game-board"> <!--Eventhough a table is an old way to do this, I prefer that here because the size is very consistent, I could also use a canvas.-->
+                        <tr>
+                            <td id="0_1"></td>
+                            <td id="0_2"></td>
+                            <td id="0_3"></td>
+                            <td id="0_4"></td>
+                            <td id="0_5"></td>
+                            <td id="0_6"></td>
+                            <td id="0_7"></td>
+                        </tr>
+
+                        <tr>
+                            <td id="1_1"></td>
+                            <td id="1_2"></td>
+                            <td id="1_3"></td>
+                            <td id="1_4"></td>
+                            <td id="1_5"></td>
+                            <td id="1_6"></td>
+                            <td id="1_7"></td>
+                        </tr>
+
+                        <tr>
+                            <td id="2_1"></td>
+                            <td id="2_2"></td>
+                            <td id="2_3"></td>
+                            <td id="2_4"></td>
+                            <td id="2_5"></td>
+                            <td id="2_6"></td>
+                            <td id="2_7"></td>
+                        </tr>
+
+                        <tr>
+                            <td id="3_1"></td>
+                            <td id="3_2"></td>
+                            <td id="3_3"></td>
+                            <td id="3_4"></td>
+                            <td id="3_5"></td>
+                            <td id="3_6"></td>
+                            <td id="3_7"></td>
+                        </tr>
+    
+                        <tr>
+                            <td id="4_1"></td>
+                            <td id="4_2"></td>
+                            <td id="4_3"></td>
+                            <td id="4_4"></td>
+                            <td id="4_5"></td>
+                            <td id="4_6"></td>
+                            <td id="4_7"></td>
+                        </tr>
+    
+                        <tr>
+                            <td id="5_1"></td>
+                            <td id="5_2"></td>
+                            <td id="5_3"></td>
+                            <td id="5_4"></td>
+                            <td id="5_5"></td>
+                            <td id="5_6"></td>
+                            <td id="5_7"></td>
+                        </tr> 
+                        
+                        <tr>
+                            <td id="6_1"></td>
+                            <td id="6_2"></td>
+                            <td id="6_3"></td>
+                            <td id="6_4"></td>
+                            <td id="6_5"></td>
+                            <td id="6_6"></td>
+                            <td id="6_7"></td>
+                        </tr>
+        
+                        <tr>
+                            <td id="7_1"></td>
+                            <td id="7_2"></td>
+                            <td id="7_3"></td>
+                            <td id="7_4"></td>
+                            <td id="7_5"></td>
+                            <td id="7_6"></td>
+                            <td id="7_7"></td>
+                        </tr>    
+                    </table>
+                </div>
+            </div>
+
+			
+	    <div id="controls">
+            <div class="resign"></div>
+            <div class="offer-draw"></div>
+			
+            <div class="time-left">
+                <h2>Time left:</h2>
+                <span id="timer"></span>
+            </div>
         </div>
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-        <div class="row">
-            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        </div>
-    </section>
+	
+	
+	
     <footer id="chatSection">
         <section id="chatSection">
             <header>
@@ -63,15 +167,10 @@
                 <textarea id="chatInput"></textarea>
             </footer>
         </section>
-        <aside id="controls">
-            <button id="resignButton">Resign</button>
-            <button id="offerDrawButton">Offer draw</button>
-            <footer>
-                <h2>Time left:</h2>
-                <span id="timer"></span>
-            </footer>
-        </aside>
+
+
     </footer>
+	
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="javascripts/messages.js"></script>
     <script type="text/javascript" src="javascripts/game.js"></script>
