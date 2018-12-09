@@ -31,12 +31,19 @@ var main = function(){
             //show name to the opponents tag in html
             $("aside #player2Name").append(mess.name);
         }
+
+        if(mess.type === messages.T_MOVE){
+            move = mess.move;
+            update = mess.update;
+        }
+
         socket.send();
     };
 
     var returnToSplash = function(){
 
     };
+
 
 
     $("div.row>div").on("click", function (event) {

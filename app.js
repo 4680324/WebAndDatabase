@@ -1,24 +1,26 @@
-//basically setting up the server.
+//importing some libraries to work with.
 var express = require("express");
 var http = require("http");     
 var websocket = require("ws");
 
+//declares port and routing.
 var port = process.argv[2];
 var app = express();
 
 var indexRouter = require("./routes/index");
-var messages = require('./public/javascripts/messages')
-var logic = require('./public/javascripts/logic')
+var messages = require('./public/javascripts/messages');
+var logic = require('./public/javascripts/logic');
 
 app.use(indexRouter);
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public")); //makes the directory a static directory (more efficient to work with, also easier.)
 
-var server = http.createServer(app)
+var server = http.createServer(app); //creates the actual server
 const wss = new websocket.Server({ server });
 
-var waitingPlayer = null
-var currentGames = []
+var waitingPlayer = null;
+var currentGames = [];  //an array of all the games that are currently being played
 
+//constructor for game
 function Game(black, white) {
     this.black = black;
     this.white = white;
@@ -28,6 +30,7 @@ function Game(black, white) {
     this.white.color = 'white';
     this.board = new logic.BoardState();
 
+    //determines who won the game and sends the appropriate message to the players
     this.end = function(winner, loser){
         if (winner.readyState === 1) {
             winner.send(new JSON.stringify(messages.O_GAME_END(true)));
@@ -45,13 +48,15 @@ function Game(black, white) {
             otherPlayer.send(messages.S_OFFER_DRAW);
         }
     
-        if (message.type === messages.T_MOVE && thisPlayer.current) {
+        if (message.type === messages.T_MOVE && thisPlayer.current) {   //if a move is recieved and its that players turn
             move = message.move;
             if (this.board.checkMove(move.x, move.y, thisPlayer.color)) {
                 this.board.move(move.x, move.y, thisPlayer.color);
                 otherPlayer.send(new messages.O_MOVE(move, null));
+                //gives the move to the other player
                 thisPlayer.current = false;
                 otherPlayer.current = true;
+                send_game_update();
             }
         }
     }
@@ -78,6 +83,20 @@ function Game(black, white) {
     currentGames.push(this);
 }
 
+var send_game_update = function(message){
+    /*check if there are 2 players in the game */
+    
+    /*Assign this socket a color (if it's a new game)*/
+
+    /*send the game update*/
+
+    /*check to see if the game is finished */
+
+
+}
+
+
+/*The first player will have to wait, the second player then automatically joins the first player*/
 function addPlayer(ws) {
     if (waitingPlayer === null) {
         waitingPlayer = ws;
@@ -111,6 +130,10 @@ wss.on("connection", function(ws) {
             // ws.emit('other player name', message.name); //shows the other player the name of their opponent
         }
         
+        if (message.type === messages.T_MOVE){
+
+        }
+
     }
 });
 
