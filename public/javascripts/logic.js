@@ -15,7 +15,12 @@
      * The BoardState object
      */       
     exports.BoardState = function() {
-        this.state = [{},{},{},{4: 'black', 5: 'white'},{4: 'white', 5: 'black'},{},{},{}];
+        this.state = {
+            1: {}, 2: {}, 3: {},
+            4: {4: 'black', 5: 'white'},
+            5: {4: 'white', 5: 'black'},
+            6: {}, 7: {}, 8: {}
+        };
         
         this.moveInfluence = function(x, y, color) {
             let influence = [];
@@ -24,7 +29,7 @@
                 let pos = {x: x + delta.x, y: y + delta.y};
                 let line = [];
 
-                while ( 0 <= pos.x < 8 && 0 <= pos.y < 8) {
+                while ( 0 < pos.x <= 8 && 0 < pos.y <= 8) {
                     if (!this.state[pos.x][pos.y]) {
                         break;
                     } else if (this.state[pos.x][pos.y] === color) {
@@ -56,7 +61,7 @@
             let black = 0;
             let white = 0;
 
-            this.state.forEach(line => {
+            Object.values(this.state).forEach(line => {
                 Object.values(line).forEach(pos => {
                     if (pos === 'black') {
                         black += 1;
