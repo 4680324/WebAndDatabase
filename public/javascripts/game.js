@@ -48,7 +48,7 @@ var main = function(){
             }else{
                 notColor = "white";
             }
-            
+
             board.move(move.x, move.y, notColor);
             update_interface();
         }
@@ -90,8 +90,7 @@ var main = function(){
     //send a JSON file to the server which gives a resign message
     $("#resignButton").on("click", function(event) {
         console.log("you resigned!");
-        // socket.send("played disconnected");
-        socet.close();
+        socket.close();
 
         $(".chat").attr("value", "You resigned, feelsbadman")
     });

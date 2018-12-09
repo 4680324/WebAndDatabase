@@ -84,18 +84,6 @@ function Game(black, white) {
     currentGames.push(this);
 }
 
-var send_game_update = function(message){
-    /*check if there are 2 players in the game */
-    
-    /*Assign this socket a color (if it's a new game)*/
-
-    /*send the game update*/
-
-    /*check to see if the game is finished */
-
-
-}
-
 
 /*The first player will have to wait, the second player then automatically joins the first player*/
 function addPlayer(ws) {
@@ -130,11 +118,6 @@ wss.on("connection", function(ws) {
             addPlayer(ws);
             // ws.emit('other player name', message.name); //shows the other player the name of their opponent
         }
-        
-        if (message.type === messages.T_MOVE){
-
-        }
-
     }
 });
 
