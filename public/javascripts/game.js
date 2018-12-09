@@ -39,12 +39,13 @@ var main = function(){
     };
 
 
-    $("div.row>div").on("click", function (event) {
+    $("td").on("click", function (event) {
         var node = event.target;
         for (var column=0; (node=node.previousSibling); column++);
+        column = (column + 1) / 2;
         var parent = event.target.parentNode;
         for (var row=0; (parent=parent.previousSibling); row++);
-        row = (row + 1) / 2;
+        row = row / 2 + 1;
         console.log("column %s, row %s", column, row);
     });
 
