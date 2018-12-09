@@ -53,6 +53,14 @@ function Game(black, white) {
                 otherPlayer.send(new messages.O_MOVE(move, null));
                 thisPlayer.current = false;
                 otherPlayer.current = true;
+                let count = game.board.count();
+                if (count.black + count.white === 64) {
+                    if (count.black > 32) {
+                        game.end(game.black, game.white);
+                    } else {
+                        game.end(game.white, game.black);
+                    }
+                }
             }
         }
     }
