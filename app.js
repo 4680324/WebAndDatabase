@@ -8,6 +8,7 @@ var app = express();
 
 var indexRouter = require("./routes/index");
 var messages = require('./public/javascripts/messages')
+var logic = require('./public/javascripts/logic')
 
 app.use(indexRouter);
 app.use(express.static(__dirname + "/public"));
@@ -18,23 +19,14 @@ const wss = new websocket.Server({ server });
 var waitingPlayer = null
 var currentGames = []
 
-function handleGameMessage(thisPlayer, otherPlayer, message) {
-    message = JSON.parse(message);
-
-    if (message.type === messages.T_OFFER_DRAW) {
-        otherPlayer.send(messages.S_OFFER_DRAW);
-    }
-
-    if (message.type === messages.T_MOVE && thisPlayer.current) {
-        thisPlayer.game.move()
-    }
-}
-
 function Game(black, white) {
     this.black = black;
     this.white = white;
     this.black.game = this;
     this.white.game = this;
+    this.black.color = 'black';
+    this.white.color = 'white';
+    this.board = new logic.BoardState();
 
     this.end = function(winner, loser){
         if (winner.readyState === 1) {
@@ -44,6 +36,24 @@ function Game(black, white) {
             loser.send(new JSON.stringify(messages.O_GAME_END(false)));
         }
         currentGames.splice(currentGames.indexOf(this));
+    }
+
+    this.handleGameMessage = function(thisPlayer, otherPlayer, message) {
+        message = JSON.parse(message);
+    
+        if (message.type === messages.T_OFFER_DRAW) {
+            otherPlayer.send(messages.S_OFFER_DRAW);
+        }
+    
+        if (message.type === messages.T_MOVE && thisPlayer.current) {
+            move = message.move;
+            if (this.board.checkMove(move.x, move.y, thisPlayer.color)) {
+                this.board.move(move.x, move.y, thisPlayer.color);
+                otherPlayer.send(new messages.O_MOVE(move, null));
+                thisPlayer.current = false;
+                otherPlayer.current = true;
+            }
+        }
     }
 
     this.black.onmessage = function(event) {
@@ -63,6 +73,7 @@ function Game(black, white) {
     this.white.send(JSON.stringify(new messages.O_GAME_START(this.black.name, 'white')));
 
     this.black.send(JSON.stringify(new messages.O_MOVE(null)));
+    this.black.current = true;
 
     currentGames.push(this);
 }
