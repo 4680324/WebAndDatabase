@@ -16,7 +16,7 @@ var main = function(){
             socket.send(JSON.stringify(startGame));
             //show own name in the name tag in html
         
-            $("aside #player1Name").append(user);
+            $("#Name1").text(user);
 
         }else{
             console.log("disconnect!");
@@ -29,7 +29,7 @@ var main = function(){
         if(mess.type === messages.T_GAME_START){
             color = mess.color;
             //show name to the opponents tag in html
-            $("aside #player2Name").append(mess.name);
+            $("#Name2").text(mess.name);
         }
         socket.send();
     };
