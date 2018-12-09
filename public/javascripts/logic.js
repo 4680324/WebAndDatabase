@@ -15,7 +15,8 @@
      * The BoardState object
      */       
     exports.BoardState = function() {
-        this.state = [{},{},{},{},{},{},{},{}];
+        this.state = [{},{},{},{4: 'black', 5: 'white'},{4: 'white', 5: 'black'},{},{},{}];
+        
         this.moveInfluence = function(x, y, color) {
             let influence = [];
 
