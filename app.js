@@ -43,6 +43,7 @@ function Game(black, white) {
         if (loser.readyState === 1) {
             loser.send(new JSON.stringify(messages.O_GAME_END(false)));
         }
+        currentGames.splice(currentGames.indexOf(this));
     }
 
     this.black.onmessage = function(event) {
@@ -58,8 +59,8 @@ function Game(black, white) {
         this.end(this.black, this.white);
     }
 
-    this.black.send(JSON.stringify(new messages.O_GAME_START(this.white.name)));
-    this.white.send(JSON.stringify(new messages.O_GAME_START(this.black.name)));
+    this.black.send(JSON.stringify(new messages.O_GAME_START(this.white.name, 'black')));
+    this.white.send(JSON.stringify(new messages.O_GAME_START(this.black.name, 'white')));
 
     this.black.send(JSON.stringify(new messages.O_MOVE(null)));
 
