@@ -57,10 +57,10 @@ function Game(black, white) {
     }
 
     this.black.onmessage = function(event) {
-        handleGameMessage(this.black, this.white, event.data);
+        this.handleGameMessage(this.black, this.white, event.data);
     }
     this.white.onmessage = function(event) {
-        handleGameMessage(this.white, this.black, event.data);
+        this.handleGameMessage(this.white, this.black, event.data);
     }
     this.black.onclose = function() {
         this.end(this.white, this.black);
