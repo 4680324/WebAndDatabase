@@ -1,5 +1,6 @@
 //global variable socket
 var socket = new WebSocket("ws://localhost");
+var color = null;
 
 
 var main = function(){ 
@@ -11,7 +12,7 @@ var main = function(){
         var user = prompt("Please enter your name");
 
         if(user !== ""){
-            var startGame = new messages.O_GAME_START(user);
+            var startGame = new messages.O_GAME_START(user, null);
             socket.send(JSON.stringify(startGame));
             //show own name in the name tag in html
         
@@ -26,8 +27,8 @@ var main = function(){
     socket.onmessage = function(event){
         var mess = JSON.parse(event.data);
         if(mess.type === messages.T_GAME_START){
+            color = mess.color;
             //show name to the opponents tag in html
-
             $("aside #player2Name").append(mess.name);
         }
         socket.send();
