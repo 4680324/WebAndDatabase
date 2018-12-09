@@ -159,13 +159,11 @@
 	
     <footer id="chatSection">
         <section id="chatSection">
-            <header>
-                <h2>Chat</h2>
-            </header>
-            <span id="chat"></span>
-            <footer>
-                <textarea id="chatInput"></textarea>
-            </footer>
+			<form class="form-inline" onsubmit="send_message(); return false">
+                <label for="send_message_holder">Enter your message</label>
+                <input type="text" value="" id="send_message_holder" placeholder="Please enter your message" />
+                <button type="submit">send</button>
+            </form>
         </section>
 
 

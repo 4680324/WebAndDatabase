@@ -13,9 +13,10 @@
      * Any to any: game has started
      */
     exports.T_GAME_START = "GAME-START";
-    exports.O_GAME_START = function(name) {
+    exports.O_GAME_START = function(name, color) {
         this.type = exports.T_GAME_START;
         this.name = name;  // this is the string name, of course not sanitized or verified :P
+        this.color = color;
     };
 
     /*
