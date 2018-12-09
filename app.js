@@ -38,18 +38,18 @@ function Game(black, white) {
 
     this.end = function(winner, loser){
         if (winner.readyState === 1) {
-            winner.send(JSON.stringify(messages.O_GAME_END(true)));
+            winner.send(new JSON.stringify(messages.O_GAME_END(true)));
         }
         if (loser.readyState === 1) {
-            loser.send(JSON.stringify(messages.O_GAME_END(false)));
+            loser.send(new JSON.stringify(messages.O_GAME_END(false)));
         }
     }
 
-    this.black.onmessage = function(message) {
-        handleGameMessage(this.black, this.white, message);
+    this.black.onmessage = function(event) {
+        handleGameMessage(this.black, this.white, event.data);
     }
-    this.white.onmessage = function(message) {
-        handleGameMessage(this.white, this.black, message);
+    this.white.onmessage = function(event) {
+        handleGameMessage(this.white, this.black, event.data);
     }
     this.black.onclose = function() {
         this.end(this.white, this.black);
@@ -58,10 +58,10 @@ function Game(black, white) {
         this.end(this.black, this.white);
     }
 
-    this.black.send(JSON.stringify(messages.O_GAME_START(this.white.name)));
-    this.white.send(JSON.stringify(messages.O_GAME_START(this.black.name)));
+    this.black.send(JSON.stringify(new messages.O_GAME_START(this.white.name)));
+    this.white.send(JSON.stringify(new messages.O_GAME_START(this.black.name)));
 
-    this.black.send(JSON.stringify(messages.O_MOVE(null)));
+    this.black.send(JSON.stringify(new messages.O_MOVE(null)));
 
     currentGames.push(this);
 }
@@ -88,15 +88,15 @@ wss.on("connection", function(ws) {
     
 
 
-    ws.onmessage = function(message) {
-        console.log("[LOG] " + message);
+    ws.onmessage = function(event) {
+        console.log("[LOG] " + event.data);
 
-        var message = JSON.parse(message);
+        var message = JSON.parse(event.data);
 
         if (message.type === messages.T_GAME_START) {
             ws.name = message.name;
             addPlayer(ws);
-            ws.emit('other player name', message.name); //shows the other player the name of their opponent
+            // ws.emit('other player name', message.name); //shows the other player the name of their opponent
         }
         
     }

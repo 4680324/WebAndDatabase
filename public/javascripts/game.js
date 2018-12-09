@@ -6,12 +6,12 @@ var main = function(){
     "use strict";
 
     socket.onopen = function(){ //when opening a connection, send a message with the name of the connecting party to the server.
-        socket.send("Hello from the client!");
+        // socket.send("Hello from the client!");
 
         var user = prompt("Please enter your name");
 
         if(user !== ""){
-            var startGame = messages.O_GAME_START(user);
+            var startGame = new messages.O_GAME_START(user);
             socket.send(JSON.stringify(startGame));
             //show own name in the name tag in html
         
@@ -24,12 +24,11 @@ var main = function(){
     };
 
     socket.onmessage = function(event){
-        var mess = JSON.parse(event);
+        var mess = JSON.parse(event.data);
         if(mess.type === messages.T_GAME_START){
             //show name to the opponents tag in html
 
-            var $opponentName;
-
+            $("aside #player2Name").append(mess.name);
         }
         socket.send();
     };
@@ -51,7 +50,7 @@ var main = function(){
     //send a JSON file to the server which gives a resign message
     $("#resignButton").on("click", function(event) {
         console.log("you resigned!");
-        socket.send("played disconnected");
+        // socket.send("played disconnected");
         socket.close();
 
         $(".chat").attr("value", "You resigned, feelsbadman")
