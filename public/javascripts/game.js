@@ -6,21 +6,18 @@ var current = false;
 var opponent = null;
 var user = null;
 
+function send_message(){ //used to get the info from the chatbox and send it as a JSON to the server
+    var payload = messages.O_CHAT($('#send_message_holder').val()); //take the value from the chatbox
+    $('#send_message_holder').val("");
+
+    $('#messages').append('<p><b>'+user+'Says:</b> '+payload.message+'</p>');
+
+    console.log("*** Client Log Message: \" send_message \" payload: " + JSON.stringify(payload));
+    socket.send(JSON.stringify(payload));
+}
+
 var main = function () {
     "use strict";
-	
-	function send_message(){ //used to get the info from the chatbox and send it as a JSON to the server
-		var payload = {};
-		payload.message = $('#send_message_holder').val(); //take the value from the chatbox
-		$('#send_message_holder').val("");
-
-        $('#messages').append('<p><b>'+user+'Says:</b> '+mess.message+'</p>');
-
-		console.log("*** Client Log Message: \" send_message \" payload: " + JSON.stringify(payload));
-		socket.emit('send_message', payload);
-	}
-
-
 
     socket.onopen = function () { //when opening a connection, send a message with the name of the connecting party to the server.
         // socket.send("Hello from the client!");
