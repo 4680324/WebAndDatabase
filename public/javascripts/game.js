@@ -24,19 +24,13 @@ var main = function () {
 
         user = prompt("Please enter your name");
 
-        if (user !== "") {
-            var startGame = new messages.O_GAME_START(user, null);
-            socket.send(JSON.stringify(startGame));
-            //show own name in the name tag in html
-
-            $("#Name1").text(user);
-
-        } else {
-            var startGame = new messages.O_GAME_START('verlegen man', null);
-            socket.send(JSON.stringify(startGame));
+        if (user == "") {
             user = 'verlegen man';
-            $('#Name1').text(user);
         }
+        
+        var startGame = new messages.O_GAME_START(user, null);
+        socket.send(JSON.stringify(startGame));
+        $('#Name1').text(user); //show own name in the name tag in html
         update_interface(); //makes sure the classes get initialized.
     };
 
