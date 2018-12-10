@@ -65,3 +65,13 @@
 * move made by player
 * offer draw
 * end of game/ details
+
+
+TODO:
+
+> score in html
+> selectors voor het bord
+> css bord
+> dode code
+> debuggen
+> documenteren
