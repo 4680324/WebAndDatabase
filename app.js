@@ -1,6 +1,6 @@
 //importing some libraries to work with.
 var express = require("express");
-var http = require("http");     
+var http = require("http");
 var websocket = require("ws");
 
 //declares port and routing.
@@ -15,10 +15,12 @@ app.use(indexRouter);
 app.use(express.static(__dirname + "/public")); //makes the directory a static directory (more efficient to work with, also easier.)
 
 var server = http.createServer(app); //creates the actual server
-const wss = new websocket.Server({ server });
+const wss = new websocket.Server({
+    server
+});
 
 var waitingPlayer = null;
-var currentGames = [];  //an array of all the games that are currently being played
+var currentGames = []; //an array of all the games that are currently being played
 
 //constructor for game
 function Game(black, white) {
@@ -32,7 +34,7 @@ function Game(black, white) {
     let game = this;
 
     //determines who won the game and sends the appropriate message to the players
-    this.end = function(winner, loser){
+    this.end = function (winner, loser) {
         if (winner.readyState === 1) {
             winner.send(JSON.stringify(new messages.O_GAME_END(true)));
         }
@@ -42,14 +44,14 @@ function Game(black, white) {
         currentGames.splice(currentGames.indexOf(this));
     }
 
-    this.handleGameMessage = function(thisPlayer, otherPlayer, message) {
+    this.handleGameMessage = function (thisPlayer, otherPlayer, message) {
         message = JSON.parse(message);
-    
+
         if (message.type === messages.T_OFFER_DRAW) {
             otherPlayer.send(messages.S_OFFER_DRAW);
         }
-    
-        if (message.type === messages.T_MOVE && thisPlayer.current) {   //if a move is recieved and its that players turn
+
+        if (message.type === messages.T_MOVE && thisPlayer.current) { //if a move is recieved and its that players turn
             move = message.move;
             if (game.board.checkMove(move.x, move.y, thisPlayer.color)) {
                 game.board.move(move.x, move.y, thisPlayer.color);
@@ -70,16 +72,16 @@ function Game(black, white) {
         }
     }
 
-    this.black.onmessage = function(event) {
+    this.black.onmessage = function (event) {
         game.handleGameMessage(game.black, game.white, event.data);
     }
-    this.white.onmessage = function(event) {
+    this.white.onmessage = function (event) {
         game.handleGameMessage(game.white, game.black, event.data);
     }
-    this.black.onclose = function() {
+    this.black.onclose = function () {
         game.end(game.white, game.black);
     }
-    this.white.onclose = function() {
+    this.white.onclose = function () {
         game.end(game.black, game.white);
     }
 
@@ -98,7 +100,7 @@ function addPlayer(ws) {
     if (waitingPlayer === null) {
         waitingPlayer = ws;
 
-        ws.onclose = function() {
+        ws.onclose = function () {
             if (waitingPlayer === ws) {
                 waitingPlayer = null;
             }
@@ -109,14 +111,14 @@ function addPlayer(ws) {
     }
 }
 
-wss.on("connection", function(ws) {
+wss.on("connection", function (ws) {
     console.log("[LOG] someone connected");
     ws.game = null;
     ws.current = false;
-    
 
 
-    ws.onmessage = function(event) {
+
+    ws.onmessage = function (event) {
         console.log("[LOG] " + event.data);
 
         var message = JSON.parse(event.data);

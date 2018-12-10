@@ -1,4 +1,4 @@
-(function(exports){
+(function (exports) {
 
     exports.directions = [
         {x: 1, y: 0},
@@ -14,7 +14,7 @@
     /* 
      * The BoardState object
      */       
-    exports.BoardState = function() {
+    exports.BoardState = function () {
         this.state = {
             1: {}, 2: {}, 3: {},
             4: {4: 'black', 5: 'white'},
@@ -22,43 +22,49 @@
             6: {}, 7: {}, 8: {}
         };
         board = this;
-        
-        this.moveInfluence = function(x, y, color) {
+
+        this.moveInfluence = function (x, y, color) {
             let influence = [];
 
-            exports.directions.forEach(function(delta) {
-                let pos = {x: x + delta.x, y: y + delta.y};
+            exports.directions.forEach(function (delta) {
+                let pos = {
+                    x: x + delta.x,
+                    y: y + delta.y
+                };
                 let line = [];
 
-                while ( 0 < pos.x && pos.x <= 8 && 0 < pos.y && pos.y <= 8) {
+                while (0 < pos.x && pos.x <= 8 && 0 < pos.y && pos.y <= 8) {
                     if (!board.state[pos.x][pos.y]) {
                         return;
                     } else if (board.state[pos.x][pos.y] === color) {
                         influence = influence.concat(line);
-                        return; 
+                        return;
                     }
 
-                    line.push({x: pos.x, y: pos.y});
+                    line.push({
+                        x: pos.x,
+                        y: pos.y
+                    });
                     pos.x += delta.x;
                     pos.y += delta.y;
                 }
             });
             return influence;
         }
-        this.checkMove = function(x, y, color) {
+        this.checkMove = function (x, y, color) {
             if (!board.state[x][y]) {
                 return board.moveInfluence(x, y, color).length > 0;
             }
             return false;
         }
-        this.move = function(x, y, color) {
+        this.move = function (x, y, color) {
             board.state[x][y] = color;
             let influence = board.moveInfluence(x, y, color);
             influence.forEach(pos => {
                 board.state[pos.x][pos.y] = color;
             });
         }
-        this.count = function() {
+        this.count = function () {
             let black = 0;
             let white = 0;
 
@@ -71,7 +77,10 @@
                     }
                 });
             });
-            return {black: black, white: white};
+            return {
+                black: black,
+                white: white
+            };
         }
     }
 
