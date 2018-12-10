@@ -5,16 +5,16 @@ td{
   display: table-cell;
 }
 tr:nth-child(2n)>td:nth-child(2n){
-  background: blue;
+  background: green;
 }
 tr:nth-child(2n+1)>td:nth-child(2n){
-  background: yellow;
+  background: greenyellow;
 }
 tr:nth-child(2n)>td:nth-child(2n+1){
-  background: yellow;
+  background: greenyellow;
 }
 tr:nth-child(2n+1)>td:nth-child(2n+1){
-  background: blue;
+  background: green;
 }
 /* div.row{
   	display: table-row;
@@ -29,5 +29,5 @@ tr:nth-child(2n+1)>td:nth-child(2n+1){
   background: black !important;;
 }
 .active-White{
-  background: grey !important;;
+  background: white !important;;
 }
