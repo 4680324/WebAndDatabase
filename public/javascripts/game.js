@@ -2,6 +2,7 @@
 var socket = new WebSocket("ws://localhost");
 var color = null;
 var board = new logic.BoardState(); //creates begin state
+var current = false;
 
 var main = function(){ 
     "use strict";
@@ -30,7 +31,7 @@ var main = function(){
     };
 
     socket.onmessage = function(event){
-        var mess = JSON.parse(event.data);
+        let mess = JSON.parse(event.data);
         if(mess.type === messages.T_GAME_START){
             color = mess.color;
             //show name to the opponents tag in html
@@ -38,11 +39,14 @@ var main = function(){
         }
 
         if(mess.type === messages.T_MOVE){
-            move = mess.move;
-            update = mess.update;
+            current = true;
 
-            var notColor = null;
+            let move = mess.move;
+            if (move === null) {
+                return;
+            }
 
+            let notColor = null;
             if(color === "white"){
                 notColor = "black";
             }else{
@@ -51,27 +55,29 @@ var main = function(){
 
             board.move(move.x, move.y, notColor);
             update_interface();
+            current = true;
         }
-
-        socket.send();
     };
 
     var update_interface = function(){
-        Object.values(this.state).forEach(line => {
-            Object.values(line).forEach(pos => {
-                if (pos === 'black') {
-                    $(/*==>desbetreffende tb */).removeClass();  //have to change selector!!
-                    pos.addClass("active-Black");
-                } else if (pos === 'white') {       
-                    $(".tabs span").removeClass();  //have to change selector!!
-                    pos.addClass("active-White");
+        Object.entries(board.state).forEach(line => {
+            Object.entries(line[1]).forEach(pos => {
+                let node = $('#'+pos[0]+'_'+line[0])
+                if (pos[1] === 'black') {
+                    node.removeClass();
+                    node.addClass("active-Black");
+                } else if (pos[1] === 'white') {       
+                    node.removeClass();
+                    node.addClass("active-White");
                 }
             });
         });
-        return {black: black, white: white};
     };
 
     $("td").on("click", function (event) {
+        if (!current) {
+            return;
+        }
         var node = event.target;
         for (var column=0; (node=node.previousSibling); column++);
         column = (column + 1) / 2;
@@ -79,11 +85,12 @@ var main = function(){
         for (var row=0; (parent=parent.previousSibling); row++);
         row = row / 2 + 1;
         console.log("column %s, row %s", column, row);
-        if(board.checkMove){
+        if(board.checkMove(column, row, color)){
             var move = new messages.O_MOVE({x:column, y:row}, null);
             socket.send(JSON.stringify(move));
             board.move(column, row, color);
             update_interface();
+            current = false;
         }
     });
 

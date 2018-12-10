@@ -53,7 +53,7 @@ function Game(black, white) {
             move = message.move;
             if (game.board.checkMove(move.x, move.y, thisPlayer.color)) {
                 game.board.move(move.x, move.y, thisPlayer.color);
-                otherPlayer.send(new messages.O_MOVE(move, null)); // maybe change
+                otherPlayer.send(JSON.stringify(new messages.O_MOVE(move, null))); // maybe change
                 //gives the move to the other player
                 thisPlayer.current = false;
                 otherPlayer.current = true;
