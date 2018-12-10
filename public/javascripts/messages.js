@@ -41,7 +41,7 @@
     /* 
      * Any to any: chat message
      */
-    exports.T_CHAT = "MOVE";
+    exports.T_CHAT = "CHAT";
     exports.O_CHAT = function (message) {
         this.type = exports.T_CHAT;
         this.message = message;

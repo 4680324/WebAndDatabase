@@ -10,12 +10,11 @@ var main = function () {
     "use strict";
 	
 	function send_message(){ //used to get the info from the chatbox and send it as a JSON to the server
-		var payload = {};
-		payload.message = $('#send_message_holder').val(); //take the value from the chatbox
+		var payload = new messages.O_CHAT($('#send_message_holder').val()); //take the value from the chatbox
 		$('#send_message_holder').val("");
 
 		console.log("*** Client Log Message: \" send_message \" payload: " + JSON.stringify(payload));
-		socket.emit('send_message', payload);
+		socket.send(JSON.stringify(payload));
 	}
 
 
