@@ -158,20 +158,18 @@
             <h2>Time left:</h2>
             <span id="timer"></span>
         </div>
-    </div>
-
-
-
-    <footer id="chatSection">
+	
+	
+	
+    <footer>
         <section id="chatSection">
-            <form class="form-inline" onsubmit="send_message(); return false">
-                <label for="send_message_holder">Enter your message</label>
-                <input type="text" value="" id="send_message_holder" placeholder="Please enter your message" />
-                <button type="submit">send</button>
-            </form>
+			<form onsubmit='send_message();return false;'>
+				<div class='form-group'>                              <!--I will write a method in my client js file to send a msg, using the id beneath-->
+					<input class='form-control' type='text' value= '' id='send_message_holder' placeholder="Enter a chat message!"/>
+				</div>
+				<button type='submit'>Send</button>
+			</form>
         </section>
-
-
     </footer>
 
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
