@@ -51,6 +51,10 @@ function Game(black, white) {
             otherPlayer.send(messages.S_OFFER_DRAW);
         }
 
+        if (message.type === messages.T_CHAT) {
+            otherPlayer.send(JSON.stringify(new messages.O_CHAT(message.message)));
+        }
+
         if (message.type === messages.T_MOVE && thisPlayer.current) { //if a move is recieved and its that players turn
             move = message.move;
             if (game.board.checkMove(move.x, move.y, thisPlayer.color)) {

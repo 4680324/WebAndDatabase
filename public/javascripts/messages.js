@@ -38,4 +38,13 @@
         this.updates = updates; // this is a list of location-value objects
     };
 
+    /* 
+     * Any to any: chat message
+     */
+    exports.T_CHAT = "MOVE";
+    exports.O_CHAT = function (message) {
+        this.type = exports.T_CHAT;
+        this.message = message;
+    };
+
 }(typeof exports === 'undefined' ? this.messages = {} : exports));
