@@ -4,17 +4,20 @@ var color = null;
 var board = new logic.BoardState(); //creates begin state
 var current = false;
 var opponent = null;
-
+var user = null;
 
 var main = function () {
     "use strict";
 	
 	function send_message(){ //used to get the info from the chatbox and send it as a JSON to the server
-		var payload = new messages.O_CHAT($('#send_message_holder').val()); //take the value from the chatbox
+		var payload = {};
+		payload.message = $('#send_message_holder').val(); //take the value from the chatbox
 		$('#send_message_holder').val("");
 
+        $('#messages').append('<p><b>'+user+'Says:</b> '+mess.message+'</p>');
+
 		console.log("*** Client Log Message: \" send_message \" payload: " + JSON.stringify(payload));
-		socket.send(JSON.stringify(payload));
+		socket.emit('send_message', payload);
 	}
 
 
@@ -22,7 +25,7 @@ var main = function () {
     socket.onopen = function () { //when opening a connection, send a message with the name of the connecting party to the server.
         // socket.send("Hello from the client!");
 
-        var user = prompt("Please enter your name");
+        user = prompt("Please enter your name");
 
         if (user !== "") {
             var startGame = new messages.O_GAME_START(user, null);
@@ -34,8 +37,8 @@ var main = function () {
         } else {
             var startGame = new messages.O_GAME_START('verlegen man', null);
             socket.send(JSON.stringify(startGame));
-
-            $('#Name1').text('verlegen man');
+            user = 'verlegen man';
+            $('#Name1').text(user);
         }
         update_interface(); //makes sure the classes get initialized.
     };
