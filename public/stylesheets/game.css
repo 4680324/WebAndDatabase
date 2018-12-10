@@ -1,7 +1,7 @@
 
 td{
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   display: table-cell;
 }
 tr:nth-child(2n)>td:nth-child(2n){
@@ -25,9 +25,9 @@ tr:nth-child(2n+1)>td:nth-child(2n+1){
 #player2Info{
   float: right;
 }
-.active-Black{
-  background: black !important;;
+.active-Black:after{
+  content: url('https://upload.wikimedia.org/wikipedia/commons/a/af/Reversi_XXt45.svg');
 }
-.active-White{
-  background: white !important;;
+.active-White:after{
+  content: url('https://upload.wikimedia.org/wikipedia/commons/f/f9/Reversi_OOt45.svg');
 }
