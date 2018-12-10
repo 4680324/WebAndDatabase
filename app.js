@@ -50,14 +50,15 @@ function Game(black, white) {
             move = message.move;
             if (game.board.checkMove(move.x, move.y, thisPlayer.color)) {
                 game.board.move(move.x, move.y, thisPlayer.color);
-                otherPlayer.send(new messages.O_MOVE(move, null));
+                otherPlayer.send(new messages.O_MOVE(move, null)); // maybe change
                 thisPlayer.current = false;
                 otherPlayer.current = true;
+
                 let count = game.board.count();
                 if (count.black + count.white === 64) {
                     if (count.black > 32) {
                         game.end(game.black, game.white);
-                    } else {
+                    } else { // when two players have the same number of stones white wins
                         game.end(game.white, game.black);
                     }
                 }
@@ -93,7 +94,7 @@ function addPlayer(ws) {
 
         ws.onclose = function() {
             if (waitingPlayer === ws) {
-                waitingPlayer = null
+                waitingPlayer = null;
             }
         }
     } else {
