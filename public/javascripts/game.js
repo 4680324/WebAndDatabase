@@ -10,7 +10,7 @@ function send_message(){ //used to get the info from the chatbox and send it as 
     var payload = new messages.O_CHAT($('#send_message_holder').val()); //take the value from the chatbox
     $('#send_message_holder').val("");
 
-    $('#messages').append('<p><b>'+user+' Says:</b> '+payload.message+'</p>');
+    $('#messages').append('<p><b>'+user+' says:</b> '+payload.message+'</p>');
 
     console.log("*** Client Log Message: \" send_message \" payload: " + JSON.stringify(payload));
     socket.send(JSON.stringify(payload));
@@ -78,7 +78,7 @@ var main = function () {
         }
 
         if(mess.type === messages.T_CHAT){
-        $('#messages').append('<p><b>'+opponent+'Says:</b> '+mess.message+'</p>');
+        $('#messages').append('<p><b>'+opponent+' says:</b> '+mess.message+'</p>');
         }
     };
 
