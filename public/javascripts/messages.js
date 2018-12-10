@@ -6,7 +6,7 @@
     exports.T_GAME_END = "GAME-END"
     exports.O_GAME_END = function(winner) {
         this.type = exports.T_GAME_END;
-        this.winner = null;  // this is true if the player is the winner, false otherwise
+        this.winner = winner;  // this is true if the player is the winner, false otherwise
     };
 
     /*

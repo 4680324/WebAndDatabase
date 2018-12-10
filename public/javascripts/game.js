@@ -59,7 +59,11 @@ var main = function () {
         }
 
         if (mess.type === messages.T_GAME_END) {
-            
+            if (mess.winner) {
+                alert("you win");
+            } else {
+                alert("you lose");
+            }
         }
     };
 
