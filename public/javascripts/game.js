@@ -3,6 +3,8 @@ var socket = new WebSocket("ws://localhost");
 var color = null;
 var board = new logic.BoardState(); //creates begin state
 var current = false;
+var opponent = null;
+
 
 var main = function () {
     "use strict";
@@ -16,6 +18,8 @@ var main = function () {
 		socket.emit('send_message', payload);
 	}
 
+
+
     socket.onopen = function () { //when opening a connection, send a message with the name of the connecting party to the server.
         // socket.send("Hello from the client!");
 
@@ -25,7 +29,6 @@ var main = function () {
             var startGame = new messages.O_GAME_START(user, null);
             socket.send(JSON.stringify(startGame));
             //show own name in the name tag in html
-
 
             $("#Name1").text(user);
 
@@ -44,6 +47,7 @@ var main = function () {
             color = mess.color;
             //show name to the opponents tag in html
             $("#Name2").text(mess.name);
+            opponent = mess.name;
         }
 
         if (mess.type === messages.T_MOVE) {
@@ -72,6 +76,10 @@ var main = function () {
             } else {
                 alert("you lose");
             }
+        }
+
+        if(mess.type === messages.T_CHAT){
+        $('#messages').append('<p><b>'+opponent+'Says:</b> '+mess.message+'</p>');
         }
     };
 
