@@ -1,19 +1,20 @@
+
 td{
   width: 30px;
   height: 30px;
   display: table-cell;
 }
 tr:nth-child(2n)>td:nth-child(2n){
-  background: blue;
+  background: green;
 }
 tr:nth-child(2n+1)>td:nth-child(2n){
-  background: yellow;
+  background: greenyellow;
 }
 tr:nth-child(2n)>td:nth-child(2n+1){
-  background: yellow;
+  background: greenyellow;
 }
 tr:nth-child(2n+1)>td:nth-child(2n+1){
-  background: blue;
+  background: green;
 }
 /* div.row{
   	display: table-row;
@@ -23,4 +24,10 @@ tr:nth-child(2n+1)>td:nth-child(2n+1){
 }
 #player2Info{
   float: right;
+}
+.active-Black{
+  background: black !important;;
+}
+.active-White{
+  background: white !important;;
 }
